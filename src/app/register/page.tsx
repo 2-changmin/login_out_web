@@ -2,21 +2,22 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
-    const res = await fetch('/api/login', {
+    const res = await fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     })
     const data = await res.json()
     if (res.ok) {
-      alert('✅ 로그인 성공!')
+      alert('🎉 회원가입 성공!')
+      router.push('/')
     } else {
       alert('❌ ' + data.message)
     }
@@ -24,8 +25,8 @@ export default function LoginPage() {
 
   return (
     <div>
-      <h1>로그인</h1>
-      <form onSubmit={handleLogin}>
+      <h1>회원가입</h1>
+      <form onSubmit={handleRegister}>
         <input
           placeholder="아이디"
           value={username}
@@ -39,10 +40,8 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <button type="submit">로그인</button>
+        <button type="submit">가입하기</button>
       </form>
-      <br />
-      <button onClick={() => router.push('/register')}>회원가입 페이지로</button>
     </div>
   )
 }
