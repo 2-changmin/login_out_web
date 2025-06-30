@@ -1,3 +1,4 @@
+// src/app/page.tsx
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -17,6 +18,7 @@ export default function LoginPage() {
     const data = await res.json()
     if (res.ok) {
       alert('✅ 로그인 성공!')
+      router.push('/home')  // 👉 로그인 성공 후 이동할 페이지
     } else {
       alert('❌ ' + data.message)
     }
