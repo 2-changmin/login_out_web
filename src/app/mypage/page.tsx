@@ -3,12 +3,17 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+// ✅ user의 타입 명시
+type User = {
+  id: number
+  username: string
+}
+
 export default function MyPage() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null) // ✅ 타입 명확히 지정
   const router = useRouter()
 
   useEffect(() => {
-    // 로그인된 사용자 정보 가져오기
     const fetchUser = async () => {
       const res = await fetch('/api/me')
       if (res.ok) {
@@ -16,14 +21,14 @@ export default function MyPage() {
         setUser(data.user)
       } else {
         alert('로그인이 필요합니다.')
-        router.push('/') // 로그인 페이지로 이동
+        router.push('/')
       }
     }
 
     fetchUser()
   }, [])
 
-  if (!user) return <p>로딩 중...</p>
+  if (!user) return <p>로딩 중...</p> // ✅ 여기서 null 검사함
 
   return (
     <div>
